@@ -21,15 +21,26 @@ func withCollection(collection string) (*m.Collection, *m.Session){
 	return c.DB(database).C(collection),c
 }
 
-func Find(collection string,param interface{})(q *m.Query){
-	c, _ := withCollection(collection)
-	query := c.Find(param)
-	return query
+func FindOne(collection string,rules interface{},param interface{})(a *interface{}){
+	c, s := withCollection(collection)
+	err := c.Find(rules).One(&param)
+	if err != nil{
+		panic("Oops, houve um problema ao executar o metodo FindOne !");
+	}
+	defer CloseSession(s)
+	return &param
 }
 
 func Insert(collection string, param interface{}){
-	c, _ := withCollection(collection)
+	c, s := withCollection(collection)
 	c.Insert(param)
+	defer CloseSession(s)
+}
+
+func Delete(collection string, param interface{}){
+	c,s := withCollection(collection)
+	c.Remove(param)
+	defer CloseSession(s)
 }
 
 

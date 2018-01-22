@@ -13,7 +13,7 @@ type Book struct{
 }
 
 func ShowAll(w http.ResponseWriter, r *http.Request){
-	var book []Book;
-	connection.Find("books",bson.M{"nome":"Livro Teste"}).All(&book);
-	json.NewEncoder(w).Encode(book)
+	var book Book;
+	b := connection.FindOne("books",bson.M{"nome":"Livro Teste"},&book)
+	json.NewEncoder(w).Encode(b)
 }

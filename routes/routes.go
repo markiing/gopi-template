@@ -28,10 +28,12 @@ func NewRouter() *mux.Router {
 }
 
 var routes = Routes{
+
 	Route{
 		"ShowAllBooks",
 		"Get",
 		"/showAll",
 		bookHandler.ShowAll,
 	},
+
 }
